@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
+<body>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
+    {% endfor %}
+
+    <table border=".5">
+        {% for field in form.visible_fields %}
+            <tr>
+                <th>{{ field.label_tag }}</th>
+                <td>
+                    {{ field.errors }}
+
+                    {{ field.help_text }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                {{ form.shipper_alter_address }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {#        <input type="text" name="shipper_name">#}
+    {#        <input type="text" name="shipper_company">#}
+    {#        <input type="text" name="shipper_address">#}
+    {#        <input type="text" name="shipper_alter_address">#}
+    {#        <input type="text" name="shipper_postalcode">#}
+    {#        <input type="tel" name="shipper_phone">#}
+    {#        <select>#}
+    {#            {% for sh_cntr in Country.objects.all() %}#}
+    {#                <option name="shipper_country" value="{{ sh_cntr.id }}">{{ sh_cntr }}</option>#}
+    {#            {% endfor %}#}
+    {#        </select>#}
+    {#        <select>#}
+    {#            {% for sh_cty in City.objects.all() %}#}
+    {#                <option name="shipper_city" value="{{ sh_cty.id }}">{{ sh_cty }}</option>#}
+    {#            {% endfor %}#}
+    {#        </select>#}
+    {#        <label for="shipper_name">Shipper Name :</label>#}
+    {#        <label for="shipper_company">Shipper Name :</label>#}
+    {#        <label for="shipper_address">Shipper Name :</label>#}
+    {#        <label for="shipper_alter_address">Shipper Name :</label>#}
+    {#        <label for="shipper_postalcode">Shipper Name :</label>#}
+    {#        <label for="shipper_phone">Shipper Name :</label>#}
+    {#        <label for="shipper_country">Shipper Name :</label>#}
+    {#        <label for="shipper_city">Shipper Name :</label>#}
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
