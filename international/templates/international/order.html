@@ -7,30 +7,35 @@
 <body>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <form method="post">
-    {% csrf_token %}
     {{ form.non_field_errors }}
     {% for hidden_field in form.hidden_fields %}
         {{ hidden_field.errors }}
         {{ hidden_field }}
     {% endfor %}
+    {% csrf_token %}
+    {{ form.as_p }}
+{#    {% csrf_token %}#}
 
-    <table border=".5">
-        {% for field in form.visible_fields %}
-            <tr>
-                <th>{{ field.label_tag }}</th>
-                <td>
-                    {{ field.errors }}
-
-                    {{ field.help_text }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                {{ form.shipper_alter_address }}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+{##}
+{#    <table border="0">#}
+{#  #}
+{#        {% for field in form.visible_fields %}#}
+{#            <tr>#}
+{#                <th>{{ field.label_tag }}</th>#}
+{#                <td>#}
+{#                    {{ field.errors }}#}
+{##}
+{#                    {{ field.help_text }}#}
+{#                </td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td>#}
+{#                    {{ field.as_text }}#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#     #}
+{#    </table>#}
     {#        <input type="text" name="shipper_name">#}
     {#        <input type="text" name="shipper_company">#}
     {#        <input type="text" name="shipper_address">#}
