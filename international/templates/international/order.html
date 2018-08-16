@@ -1,0 +1,180 @@
+
+
+{% extends 'core/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Orders | {{ block.super }}{% endblock title %}
+
+{% block content %}
+{% include "core/messages.html" %}
+
+    <div class="page-header">
+      <h1 class="text-center"><b>shipping System</b><br><small>ABC shipping Ltd.</small></h1>
+    </div>
+    
+<h3>Order Details</h3>
+
+
+
+<h5>Please enter your order information and click "order"</h5><hr>
+<form id="order_form" method="POST" action="" >
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br>
+    <input class="btn btn-primary" type="submit" value='{{ title }}'> 
+    <span class="float-right text-right">
+        <a href="#" id="add-i" class="">Add Item</a>  
+    </span>
+    <div><br></div><hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Weight (KG) (*)</th>
+                    <th scope="col">Width (CM) (*)</th>
+                    <th scope="col">Height(CM) (*)</th>
+                    <th scope="col">Lenth (CM) (*)</th>
+                    <th scope="col">Shipping Weight (KG)(*)</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody class="items-container">
+                {%for  o in items %}
+                <tr class="variant_row_{{forloop.counter0}}" id="items_row">
+                    <td><input type="text" value="{{o.weight}}"   class="form-control" placeholder="Weight" id="item_weight{{ forloop.counter0 }}"></td>
+                    <td><input type="text" value="{{o.width}}"    class="form-control" placeholder="width"  id="item_width{{ forloop.counter0 }}"></td>
+                    <td><input type="text" value="{{o.height}}"   class="form-control" placeholder="Height" id="item_height{{ forloop.counter0 }}"></td>
+                    <td><input type="text" value="{{o.lenth}}"    class="form-control" placeholder="Lenth"  id="item_lenth{{ forloop.counter0 }}" data-role="tagsinput"></td>
+                    <td><input type="text" value="{{o.shipping}}" class="form-control" placeholder="Shipping Weight" id="item_shipping{{ forloop.counter0 }}" data-role="tagsinput"></td>
+                    <td><span class="float-right text-right" id="remove_{{ forloop.counter0 }}">
+                        <a href="#" class="remove-i btn btn-primary" value="{{ forloop.counter0 }}">Remove</a>
+                    </span></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    
+
+</form>
+
+
+
+{% endblock content %}
+
+
+{% block foot %}
+
+<script type="text/javascript" src='{% static "js/jquery-3.1.1.min.js"%}'></script>
+
+
+<script type="text/javascript">
+
+
+    var items = [];
+
+
+/*  Start On Lode action        */
+    $(".items-container #items_row").each(function(index , data){
+        var weight   = '#item_weight'    + index;
+        var width    = '#item_width'     + index;
+        var height   = '#item_height'    + index;
+        var lenth    = '#item_lenth'     + index;
+        var shipping = '#item_shipping'  + index;
+        items.push({ 'weight':$(weight).val() , 'width': $(width).val(),'height':$(height).val() , 'lenth': $(lenth).val() ,'shipping':$(shipping).val() });
+    });
+/*  End On Lode action        */
+
+/*  Start On submit action        */
+    $( "#order_form" ).submit(function( event ) {
+        var items = [];
+        $(".items-container #items_row").each(function(index , data){
+            var weight   = '#item_weight'    + index;
+            var width    = '#item_width'     + index;
+            var height   = '#item_height'    + index;
+            var lenth    = '#item_lenth'     + index;
+            var shipping = '#item_shipping'  + index;
+            items.push({ 'weight':$(weight).val() , 'width': $(width).val(),'height':$(height).val() , 'lenth': $(lenth).val() ,'shipping':$(shipping).val() });
+        });
+        $("#id_items").val(  JSON.stringify(items)  );
+    });
+/*  End On submit action        */
+
+
+/*  Start Add action        */
+        $("#add-i").on("click", function(e){
+        e.preventDefault();
+        console.log("add");
+        items = [] ;
+        $(".items-container #items_row").each(function(index , data){
+            console.log(data);
+            var weight   = '#item_weight'    + index;
+            var width    = '#item_width'     + index;
+            var height   = '#item_height'    + index;
+            var lenth    = '#item_lenth'     + index;
+            var shipping = '#item_shipping'  + index;
+            items.push({ 'weight':$(weight).val() , 'width': $(width).val(),'height':$(height).val() , 'lenth': $(lenth).val() ,'shipping':$(shipping).val() });
+            console.log("Items On Add: ", items);
+        });
+
+        $('.items-container').html('');
+        items.push({ 'weight':'' , 'width': '' ,'height':'' , 'lenth': '' ,'shipping':'' });
+        $(items).each(function( index , data ) {
+
+            var weight   = $('<input type="text" class="form-control" placeholder="weight">').val(data.weight);
+            $(weight).attr('id', 'item_weight' + index );
+            var weight_td = $('<td> </td>').append( weight);
+
+            var width    = $('<input type="text" class="form-control" placeholder="width">').val(data.width);
+            $(width).attr('id', 'item_width' + index );
+            var width_td = $('<td> </td>').append( width);
+
+            var height   = $('<input type="text" class="form-control" placeholder="height">').val(data.height);
+            $(height).attr('id', 'item_height' + index );
+            var height_td = $('<td> </td>').append( height);
+
+            var lenth    = $('<input type="text" class="form-control" placeholder="lenth">').val(data.lenth);
+            $(lenth).attr('id', 'item_lenth' + index );
+            var lenth_td = $('<td> </td>').append(lenth);
+
+            var shipping = $('<input type="text" class="form-control" placeholder="shipping">').val(data.shipping);
+            $(shipping).attr('id', 'item_shipping' + index );
+            var shipping_td = $('<td> </td>').append(shipping);
+
+            var Remove = $('<a></a>').text("Remove");
+            $(Remove).attr('href', '#');
+            $(Remove).addClass("remove-i btn btn-primary")
+            $(Remove).attr('value',index );
+            var RemoveCol  = $('<span></span>').addClass("float-right text-right")
+            $(RemoveCol).attr('id', 'remove_' + index );
+            $(RemoveCol).append( Remove );
+            var remove_td = $('<td> </td>').append(RemoveCol);
+
+
+            var row = $('<tr> </tr>').append( weight_td , width_td , height_td, lenth_td, shipping_td, remove_td );
+            $(row).attr('id', 'items_row');
+            $(row).addClass("items_row_" + index )
+            $('.items-container').append(row);
+        });
+
+    });
+/*  End Add action        */
+
+/*  Start remove action        */
+$(document).on("click",'.remove-i', function(e){
+    var target = $(e.currentTarget);
+    var RemoveCol = '#remove_'   + target.attr('value') ;
+    var row = '.items_row_'   + target.attr('value') ;
+    $(row).remove();
+    $(RemoveCol).remove();
+    variant.splice(target.attr('value'),1);
+})
+/*  End remove action        */
+</script>
+
+
+
+{% endblock %}
+
+
+
+
+
