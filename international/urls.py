@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from . import views
+from international import views
 
 urlpatterns = [
     url(r'^/', views.IndexView.as_view(),   name='index'),
@@ -9,3 +9,4 @@ urlpatterns = [
     url(r'^order/$', views.order,                 name='order'),
     url(r'^country/$', views.countryView,           name='country'),
 ]
+

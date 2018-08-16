@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.shortcuts import render
-
-# Create your views here.
 from django.http import Http404
 from django.http import HttpResponse
 from django.views import generic
 from .forms import OrderForm , countryForm
-
 from .models import Country, Company
 from django.contrib.auth.decorators import login_required
+
+
 
 
 def index(request):
@@ -37,6 +35,7 @@ def order(request):
     else:
         form = OrderForm()
     return render(request, 'international/order.html', {'form': form , 'items':items_data,'title':title  })
+
 
 def bill(request,bill_id):
     return HttpResponse("Bill is %i" %bill_id)

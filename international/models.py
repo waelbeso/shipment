@@ -4,9 +4,6 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
-
-
-# Create your models here.
 Curruncy_list = (('USD', 'US Dollar'), ('EGP', 'Egyptian Pound'))
 
 Order_Types_CHOICES = (
@@ -87,6 +84,7 @@ class Order(models.Model):
     shipper_country = models.CharField(max_length=3 , verbose_name="shipper_country")
     #shipper_cite = models.ForeignKey(City, models.CASCADE, related_name='shipper_cite')
     shipper_cite    = models.CharField(max_length=100 , verbose_name="shipper_cite")
+
     shipper_postalcode = models.CharField(max_length=50)
     shipper_phone = models.CharField(max_length=100)
 
