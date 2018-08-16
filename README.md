@@ -1,20 +1,13 @@
-# Online Banking System
+# Online Shipping System
 
-This is a Online Banking Concept.
+This is a Online Shipping Concept.
 
 
 ## Features
-* Create Bank Account.
+* Create Account.
 * Load account Details Using Account Number & password.
 * Deposit & Withdraw Money.
 * Transaction Detail Page.
 * Count Monthly Interest Using Celery.
+* Order Shipping
 
-# 
-#
-## Images:
-![alt text](https://i.imgur.com/QZwaEHX.png)
-#
-![alt text](https://i.imgur.com/HTcqWcw.png)
-#
-![alt text](https://i.imgur.com/HHsmJVD.png)
